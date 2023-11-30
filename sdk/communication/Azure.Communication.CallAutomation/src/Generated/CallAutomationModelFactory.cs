@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class CommunicationCallAutomationModelFactory
+    public static partial class CallAutomationModelFactory
     {
         /// <summary> Initializes a new instance of TransferCallToParticipantResult. </summary>
         /// <param name="operationContext"> The operation context provided by client. </param>
@@ -20,14 +20,6 @@ namespace Azure.Communication.CallAutomation
         public static TransferCallToParticipantResult TransferCallToParticipantResult(string operationContext = null)
         {
             return new TransferCallToParticipantResult(operationContext);
-        }
-
-        /// <summary> Initializes a new instance of MuteParticipantsResult. </summary>
-        /// <param name="operationContext"> The operation context provided by client. </param>
-        /// <returns> A new <see cref="CallAutomation.MuteParticipantsResult"/> instance for mocking. </returns>
-        public static MuteParticipantsResult MuteParticipantsResult(string operationContext = null)
-        {
-            return new MuteParticipantsResult(operationContext);
         }
 
         /// <summary> Initializes a new instance of RecordingStateResult. </summary>
@@ -69,18 +61,6 @@ namespace Azure.Communication.CallAutomation
         public static CallDisconnected CallDisconnected(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null)
         {
             return new CallDisconnected(callConnectionId, serverCallId, correlationId, operationContext);
-        }
-
-        /// <summary> Initializes a new instance of CallTransferAccepted. </summary>
-        /// <param name="callConnectionId"> Call connection ID. </param>
-        /// <param name="serverCallId"> Server call ID. </param>
-        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
-        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
-        /// <returns> A new <see cref="CallAutomation.CallTransferAccepted"/> instance for mocking. </returns>
-        public static CallTransferAccepted CallTransferAccepted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
-        {
-            return new CallTransferAccepted(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
         }
 
         /// <summary> Initializes a new instance of CallTransferFailed. </summary>
@@ -217,25 +197,17 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Initializes a new instance of ContinuousDtmfRecognitionToneReceived. </summary>
-        /// <param name="toneInfo"> Information about Tone. </param>
+        /// <param name="sequenceId"> The sequence id which can be used to determine if the same tone was played multiple times or if any tones were missed. </param>
+        /// <param name="tone"></param>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId or skype chain ID. </param>
         /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
         /// <returns> A new <see cref="CallAutomation.ContinuousDtmfRecognitionToneReceived"/> instance for mocking. </returns>
-        public static ContinuousDtmfRecognitionToneReceived ContinuousDtmfRecognitionToneReceived(ToneInfo toneInfo = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, ResultInformation resultInformation = null, string operationContext = null)
+        public static ContinuousDtmfRecognitionToneReceived ContinuousDtmfRecognitionToneReceived(int? sequenceId = null, DtmfTone? tone = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, ResultInformation resultInformation = null, string operationContext = null)
         {
-            return new ContinuousDtmfRecognitionToneReceived(toneInfo, callConnectionId, serverCallId, correlationId, resultInformation, operationContext);
-        }
-
-        /// <summary> Initializes a new instance of ToneInfo. </summary>
-        /// <param name="sequenceId"> The sequence id which can be used to determine if the same tone was played multiple times or if any tones were missed. </param>
-        /// <param name="tone"></param>
-        /// <returns> A new <see cref="CallAutomation.ToneInfo"/> instance for mocking. </returns>
-        public static ToneInfo ToneInfo(int sequenceId = default, DtmfTone tone = default)
-        {
-            return new ToneInfo(sequenceId, tone);
+            return new ContinuousDtmfRecognitionToneReceived(sequenceId, tone, callConnectionId, serverCallId, correlationId, resultInformation, operationContext);
         }
 
         /// <summary> Initializes a new instance of ContinuousDtmfRecognitionStopped. </summary>
