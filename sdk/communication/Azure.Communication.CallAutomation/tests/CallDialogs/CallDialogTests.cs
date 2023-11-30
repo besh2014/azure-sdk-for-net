@@ -53,7 +53,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
 
         private const string DummyDialogStatusResponse = "{" +
                                     "\"dialogId\": \"dummyDialogId\"," +
-                                    "\"dialogInputType\": \"powerVirtualAgent\"" +
+                                    "\"dialog\": " +
+                                        "{ \"kind\": \"powerVirtualAgent\" }" +
                                     "}";
 
         private static CallDialog? _callDialog;
