@@ -13,17 +13,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
     public class CallDialogTests : CallAutomationTestBase
     {
         private const string dialogId = "92e08834-b6ee-4ede-8956-9fefa27a691c";
-        private static readonly Dictionary<string, object> dialogContextWithObject = new Dictionary<string, object>()
-        {
-            {
-                "context",
-                new
-                {
-                    contextName = "name",
-                    secondProperty = 1
-                }
-            }
-        };
         private static readonly Dictionary<string, object> dialogContextWithString = new Dictionary<string, object>()
         {
             {
@@ -32,11 +21,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
             }
         };
         private static readonly StartDialog _startDialogOptions = new StartDialog(new PowerVirtualAgentsDialog("botAppId", new Dictionary<string, object>()))
-        {
-            OperationContext = "context"
-        };
-
-        private static readonly StartDialog _startDialogWithCustomObjectOptions = new StartDialog(new PowerVirtualAgentsDialog("botAppId", dialogContextWithObject))
         {
             OperationContext = "context"
         };
@@ -131,10 +115,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
                 },
                 new Func<CallDialog, Task<Response<DialogResult>>>?[]
                 {
-                    callDialog => callDialog.StartDialogAsync(_startDialogWithCustomObjectOptions)
-                },
-                new Func<CallDialog, Task<Response<DialogResult>>>?[]
-                {
                     callDialog => callDialog.StartDialogAsync(_startDialogWithStringOptions)
                 },
                 new Func<CallDialog, Task<Response<DialogResult>>>?[]
@@ -151,10 +131,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
                 new Func<CallDialog, Response<DialogResult>>?[]
                 {
                     callDialog => callDialog.StartDialog(_startDialogOptions)
-                },
-                new Func<CallDialog, Response<DialogResult>>?[]
-                {
-                    callDialog => callDialog.StartDialog(_startDialogWithCustomObjectOptions)
                 },
                 new Func<CallDialog, Response<DialogResult>>?[]
                 {

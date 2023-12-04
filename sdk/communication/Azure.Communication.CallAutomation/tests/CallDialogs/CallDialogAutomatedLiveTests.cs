@@ -361,7 +361,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
         }
 
         [RecordedTest]
-        public async Task ConsecutiveDialogsTest()
+        public async Task SubsequentDialogsTest()
         {
             // ignores test if botAppId or PMA Endpoint is not set in environment variables
             var botAppId = TestEnvironment.BotAppId;
@@ -457,12 +457,18 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
                 Assert.IsNotNull(dialogStoppedReceived);
                 Assert.IsTrue(dialogStoppedReceived is DialogCompleted);
 
+                string secondDialogId = "de7fcbc8-1803-4ec1-80ed-2c9c087587fd";
+                dialogOptions = new StartDialog(secondDialogId, new PowerVirtualAgentsDialog(botAppId, dialogContext))
+                {
+                    OperationContext = "context"
+                };
+
                 // Start and stop the dialog again, it should work fine
                 dialogResponse = await callDialog.StartDialogAsync(dialogOptions).ConfigureAwait(false);
                 Assert.AreEqual(StatusCodes.Status201Created, dialogResponse.GetRawResponse().Status);
 
                 Assert.NotNull(dialogResponse.Value.DialogId);
-                Assert.AreEqual(dialogId, dialogResponse.Value.DialogId);
+                Assert.AreEqual(secondDialogId, dialogResponse.Value.DialogId);
 
                 stopDialogResponse = await callDialog.StopDialogAsync(dialogId).ConfigureAwait(false);
                 Assert.AreEqual(StatusCodes.Status204NoContent, stopDialogResponse.GetRawResponse().Status);
